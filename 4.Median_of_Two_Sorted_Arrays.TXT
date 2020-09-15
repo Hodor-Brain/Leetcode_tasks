@@ -1,0 +1,40 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) 
+    {
+        if (nums1.size() > nums2.size())
+            return findMedianSortedArrays(nums2, nums1);
+        
+        int a = nums1.size();
+        int b = nums2.size();
+        int c = a + b;
+
+        int l = 0;
+        int r = a;
+
+        while (l <= r) 
+        {
+            int ix = (l + r) / 2;
+            int iy = (c + 1) / 2 - ix;
+
+            int lxMax = (ix == 0) ? INT_MIN : nums1[ix - 1];
+            int rxMin = (ix == a) ? INT_MAX : nums1[ix];
+            int lyMax = (iy == 0) ? INT_MIN : nums2[iy - 1];
+            int ryMin = (iy == b) ? INT_MAX : nums2[iy];
+
+            if (lxMax <= ryMin && lyMax <= rxMin) 
+            {
+                if ((c) % 2 == 0)
+                    return (double)((std::fmax(lxMax, lyMax) + std::fmin(rxMin, ryMin)) / 2);
+                else
+                    return (double)std::fmax(lxMax, lyMax);
+            }
+            
+            else if (lxMax > ryMin)
+                r = ix - 1;
+            else 
+                l = ix + 1;
+        }
+        return 0;
+    }
+};

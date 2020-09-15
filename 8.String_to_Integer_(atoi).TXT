@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int myAtoi(string str) 
+    {
+        istringstream string(str);
+        string >> std::ws;
+        
+        int integer = 0;
+        string >> integer;
+        
+        return integer;
+    }
+};

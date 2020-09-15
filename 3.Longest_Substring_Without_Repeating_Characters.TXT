@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) 
+    {
+        int len = s.length();
+        int numb = 0;
+        
+        bool repeat = 0;
+        
+        vector<char> subs;
+        
+        if (s.length() == 0)
+            return 0;
+        for (int i = 0; i < len; i++) 
+        {
+            subs.push_back(s[i]);
+            for (int j = i + 1; j < len; j++) 
+            {
+                for (int k = 0; k < subs.size(); k++) 
+                {
+                    if (s[j] == subs[k]) 
+                    {
+                        repeat = 1;
+                        break;
+                    }
+                }
+                
+                if (!repeat) 
+                {
+                    subs.push_back(s[j]);
+                    numb = std::max(numb, j - i + 1);
+                }
+                else 
+                {
+                    subs.clear();
+                    
+                    j = len;
+                    repeat = 0;
+                }
+            }
+        }
+
+        if (numb == 0) 
+            return 1;
+        return numb;
+    }
+};
